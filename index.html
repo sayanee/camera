@@ -1,0 +1,30 @@
+<style>
+  body { margin: 0; padding: 0; }
+  video { width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box; }
+</style>
+<video autoplay="" class="camera" id="camera" style="float:left"></video>
+<script>
+  var camera = document.getElementById('camera')
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+
+  var constraints = {
+    audio: false,
+    video: true
+  }
+
+  function successCallback(stream) {
+    window.stream = stream
+    if (window.URL) {
+      camera.src = window.URL.createObjectURL(stream)
+    } else {
+      camera.src = stream
+    }
+  }
+
+  function errorCallback(error) {
+    console.log('navigator.getUserMedia error: ', error)
+  }
+
+  navigator.getUserMedia(constraints, successCallback, errorCallback)
+  camera.play()
+</script>
